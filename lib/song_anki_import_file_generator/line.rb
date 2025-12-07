@@ -8,26 +8,39 @@ module SongAnkiImportFileGenerator
     end
 
     def to_card
-      if index == 0
-        previous_stanza = @stanza.song.stanzas[@stanza.index - 1] if @stanza.index > 0
+      Card.new(front:, back:)
+    end
 
-        front = if previous_stanza
-          "#{previous_stanza.title}\n#{previous_stanza.lines.last.text}"
-        else
+    def front
+      if first_in_stanza?
+        if stanza.first?
           "First Line"
+        else
+          @stanza.previous.lines.last.to_s
         end
       else
-        previous_line = @stanza.lines[index - 1]
-        front = "#{@stanza.title}\n#{previous_line.text}"
+        previous.to_s
       end
+    end
 
-      back = "#{@stanza.title}\n#{@text}"
+    def back
+      to_s
+    end
 
-      Card.new(front: front, back: back)
+    def first_in_stanza?
+      index == 0
     end
 
     def index
       @index ||= @stanza.lines.index(self)
+    end
+
+    def previous
+      @previous ||= @stanza.lines[index - 1]
+    end
+
+    def to_s
+      "#{@stanza.title}\n#{@text}"
     end
   end
 end
