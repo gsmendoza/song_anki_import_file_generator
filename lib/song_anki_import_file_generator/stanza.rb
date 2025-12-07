@@ -12,5 +12,13 @@ module SongAnkiImportFileGenerator
       line.stanza = self
       @lines << line
     end
+
+    def index
+      @index ||= @song.stanzas.index(self)
+    end
+
+    def previous
+      @previous ||= @song.stanzas[index - 1]
+    end
   end
 end
