@@ -40,7 +40,7 @@ module SongAnkiImportFileGenerator
     end
 
     def to_s
-      "#{@stanza.title}\n#{@text}"
+      "#{@stanza.index + 1}. #{@stanza.title}\n#{index + 1}. #{@text}"
     end
   end
 end

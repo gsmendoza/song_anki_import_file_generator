@@ -22,7 +22,7 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
           card = line.to_card
 
           expect(card.front).to eq("First Line")
-          expect(card.back).to eq("Intro\n...         Then off to reap the corn,")
+          expect(card.back).to eq("1. Intro\n1. ...         Then off to reap the corn,")
         end
       end
 
@@ -45,8 +45,8 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to the line previous to line i" do
           card = line_i.to_card
 
-          expect(card.front).to eq("Intro\n...         Then off to reap the corn,")
-          expect(card.back).to eq("Intro\n...         and leave where I was born")
+          expect(card.front).to eq("1. Intro\n1. ...         Then off to reap the corn,")
+          expect(card.back).to eq("1. Intro\n2. ...         and leave where I was born")
         end
       end
     end
@@ -79,10 +79,24 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to the last line of the previous stanza" do
           card = line.to_card
 
-          expect(card.front).to eq("Intro\n..          four, five")
-          expect(card.back).to eq("Verse\n<Am>--      Well, in the merry month of May,")
+          expect(card.front).to eq("1. Intro\n1. ..          four, five")
+          expect(card.back).to eq("2. Verse\n1. <Am>--      Well, in the merry month of May,")
         end
       end
+    end
+  end
+
+  describe "#to_s" do
+    it "returns the text of the line" do
+      line = described_class.new(text: "...         Then off to reap the corn,")
+
+      stanza = SongAnkiImportFileGenerator::Stanza.new(title: "Intro")
+      stanza.add_line(line)
+
+      song = SongAnkiImportFileGenerator::Song.new
+      song.add_stanza(stanza)
+
+      expect(line.to_s).to eq("1. Intro\n1. ...         Then off to reap the corn,")
     end
   end
 end
