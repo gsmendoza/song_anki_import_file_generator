@@ -1,0 +1,65 @@
+require "spec_helper"
+
+RSpec.describe SongAnkiImportFileGenerator::App do
+  describe "#call" do
+    let(:input_content) { "" }
+
+    let(:input_path) { "tmp/input.txt" }
+    let(:output_path) { "tmp/output.csv" }
+
+    let(:call_app) { described_class.new(input_path:, output_path:).call }
+
+    before do
+      File.delete(input_path) if File.exist?(input_path)
+      File.write(input_path, input_content)
+    end
+
+    describe "concerning existence of output path" do
+      before do
+        File.delete(output_path) if File.exist?(output_path)
+      end
+
+      context "when output path does not exist" do
+        it "creates the file" do
+          call_app
+
+          expect(File.read(output_path)).to eq("")
+        end
+      end
+
+      context "when output path exists" do
+        before do
+          File.write(output_path, "")
+        end
+
+        it "updates the file" do
+          call_app
+
+          expect(File.read(output_path)).to eq("")
+        end
+      end
+    end
+
+    describe "concerning the input path" do
+      context "when the input is an empty file" do
+        let(:input_content) { "" }
+
+        it "generates an empty Anki import file" do
+          call_app
+
+          expect(File.read(output_path)).to eq("")
+        end
+      end
+
+      context "when the input is a file has a line that is not a stanza" do
+        let(:input_content) { "Jack O’Connell, Brian Dunphy & Darren Holden - Rocky Road to Dublin" }
+
+        it "generates an empty Anki import file" do
+          call_app
+
+          expect(File.read(output_path)).to eq("")
+        end
+      end
+    end
+  end
+end
