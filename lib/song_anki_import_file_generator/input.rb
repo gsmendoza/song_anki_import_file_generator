@@ -12,7 +12,7 @@ module SongAnkiImportFileGenerator
         if line.stanza_header?
           current_stanza = Stanza.new(title: line.text)
           song.add_stanza(current_stanza)
-        elsif current_stanza
+        elsif current_stanza && line.present?
           current_stanza.add_line(Line.new(text: line.text))
         end
       end

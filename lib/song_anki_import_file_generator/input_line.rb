@@ -9,5 +9,9 @@ module SongAnkiImportFileGenerator
     def stanza_header?
       @text.start_with?("[")
     end
+
+    def present?
+      !@text.strip.empty?
+    end
   end
 end

@@ -8,11 +8,13 @@ RSpec.describe SongAnkiImportFileGenerator::Input do
       song = input.to_song
 
       expect(song).to be_a(SongAnkiImportFileGenerator::Song)
-      expect(song.stanzas.size).to eq(13)
 
-      expect(song.stanzas.first.lines.size).to eq(13)
-      expect(song.stanzas[1].lines.size).to eq(23)
-      expect(song.stanzas.last.lines.size).to eq(4)
+      aggregate_failures do
+        expect(song.stanzas.size).to eq(13)
+        expect(song.stanzas.first.lines.size).to eq(10)
+        expect(song.stanzas[1].lines.size).to eq(18)
+        expect(song.stanzas.last.lines.size).to eq(4)
+      end
     end
   end
 end
