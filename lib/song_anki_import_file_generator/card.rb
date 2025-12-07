@@ -6,9 +6,5 @@ module SongAnkiImportFileGenerator
       @front = front
       @back = back
     end
-
-    def to_s
-      %(#{front},"#{back}")
-    end
   end
 end

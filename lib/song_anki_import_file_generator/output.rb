@@ -1,3 +1,5 @@
+require "csv"
+
 module SongAnkiImportFileGenerator
   class Output
     attr_reader :path, :cards
@@ -8,7 +10,11 @@ module SongAnkiImportFileGenerator
     end
 
     def write
-      File.write(@path, @cards.join("\n"))
+      CSV.open(@path, "w") do |csv|
+        @cards.each do |card|
+          csv << [card.front, card.back]
+        end
+      end
     end
   end
 end
