@@ -50,5 +50,39 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         end
       end
     end
+
+    context "when stanza i is not the first stanza of the song" do
+      let(:stanzas) do
+        [
+          SongAnkiImportFileGenerator::Stanza.new(title: "Intro"),
+          SongAnkiImportFileGenerator::Stanza.new(title: "Verse")
+        ]
+      end
+
+      let(:stanza_i) { stanzas[1] }
+
+      before do
+        stanzas.each do |stanza|
+          song.add_stanza(stanza)
+        end
+      end
+
+      context "when the line is the first line of stanza i" do
+        let(:previous_line) { described_class.new(text: "..          four, five") }
+        let(:line) { described_class.new(text: "<Am>--      Well, in the merry month of May,") }
+
+        before do
+          stanzas[0].add_line(previous_line)
+          stanza_i.add_line(line)
+        end
+
+        it "sets the front of the card to the last line of the previous stanza" do
+          card = line.to_card
+
+          expect(card.front).to eq("Intro\n..          four, five")
+          expect(card.back).to eq("Verse\n<Am>--      Well, in the merry month of May,")
+        end
+      end
+    end
   end
 end

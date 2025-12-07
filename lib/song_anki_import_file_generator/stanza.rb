@@ -1,6 +1,7 @@
 module SongAnkiImportFileGenerator
   class Stanza
     attr_reader :title, :lines
+    attr_accessor :song
 
     def initialize(title:)
       @title = title

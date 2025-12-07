@@ -7,6 +7,7 @@ module SongAnkiImportFileGenerator
     end
 
     def add_stanza(stanza)
+      stanza.song = self
       @stanzas << stanza
     end
   end
