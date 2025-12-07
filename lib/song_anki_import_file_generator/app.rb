@@ -7,35 +7,17 @@ module SongAnkiImportFileGenerator
 
     def call
       content = File.read(@input_path)
-      stanzas = parse_stanzas(content)
-      output_content = stanzas.map { |stanza| format_stanza(stanza) }.join("\n")
-      File.write(@output_path, output_content)
-      @output_path
-    end
+      output = Output.new(@output_path)
 
-    private
-
-    def parse_stanzas(content)
-      stanzas = []
-      current_stanza = []
-      in_stanza = false
-
-      content.each_line do |line|
-        if line.start_with?("[")
-          stanzas << current_stanza.join("\n") if in_stanza && current_stanza.any?
-          current_stanza = []
-          in_stanza = true
+      Song.new(content).stanzas.each do |stanza|
+        stanza.lines.each do |line|
+          output.cards << line.to_card
         end
-
-        current_stanza << line.chomp if in_stanza
       end
 
-      stanzas << current_stanza.join("\n") if in_stanza && current_stanza.any?
-      stanzas
-    end
+      output.write
 
-    def format_stanza(stanza)
-      %{(First line,"#{stanza}"}
+      output.path
     end
   end
 end
