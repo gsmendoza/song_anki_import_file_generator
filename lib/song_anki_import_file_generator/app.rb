@@ -9,7 +9,7 @@ module SongAnkiImportFileGenerator
       content = File.read(@input_path)
       output = Output.new(@output_path)
 
-      Song.new(content).stanzas.each do |stanza|
+      Input.new(content).to_song.stanzas.each do |stanza|
         stanza.lines.each do |line|
           output.cards << line.to_card
         end

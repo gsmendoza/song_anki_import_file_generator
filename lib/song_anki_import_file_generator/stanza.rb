@@ -1,13 +1,15 @@
 module SongAnkiImportFileGenerator
   class Stanza
-    def initialize(text)
-      @text = text
+    attr_reader :title, :lines
+
+    def initialize(title:)
+      @title = title
+      @lines = []
     end
 
-    # Treating the whole stanza as a single "line" for the card logic
-    # to match existing test expectations of one card per stanza.
-    def lines
-      [Line.new(@text)]
+    def add_line(line)
+      line.stanza = self
+      @lines << line
     end
   end
 end
