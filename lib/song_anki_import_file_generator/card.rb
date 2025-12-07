@@ -8,7 +8,7 @@ module SongAnkiImportFileGenerator
     end
 
     def to_s
-      %{(#{front},"#{back}"}
+      %(#{front},"#{back}")
     end
   end
 end
