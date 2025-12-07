@@ -16,6 +16,7 @@ GEM
       reline (>= 0.4.2)
     json (2.17.1)
     language_server-protocol (3.17.0.5)
+    lefthook (2.0.8)
     lint_roller (1.1.0)
     parallel (1.27.0)
     parser (3.3.10.0)
@@ -83,6 +84,7 @@ PLATFORMS
 
 DEPENDENCIES
   irb
+  lefthook (~> 2.0)
   rake (~> 13.0)
   song_anki_import_file_generator!
   standardrb (~> 1.0)
