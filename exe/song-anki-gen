@@ -1,0 +1,13 @@
+#!/usr/bin/env ruby
+
+require "song_anki_import_file_generator"
+
+input_path = ARGV[0]
+if input_path.nil?
+  puts "Usage: song-anki-gen <input_path> [output_path]"
+  exit 1
+end
+
+output_path = ARGV[1] || input_path.sub(/\.[^.]+$/, ".csv")
+
+SongAnkiImportFileGenerator::App.new(input_path: input_path, output_path: output_path).call
