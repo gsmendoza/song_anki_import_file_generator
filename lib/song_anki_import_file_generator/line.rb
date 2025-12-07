@@ -8,9 +8,15 @@ module SongAnkiImportFileGenerator
     end
 
     def to_card
-      # This logic assumes the first line of the stanza is the "First Line"
+      index = @stanza.lines.index(self)
 
-      front = "First Line"
+      if index == 0
+        front = "First Line"
+      else
+        previous_line = @stanza.lines[index - 1]
+        front = "#{@stanza.title}\n#{previous_line.text}"
+      end
+
       back = "#{@stanza.title}\n#{@text}"
 
       Card.new(front: front, back: back)
