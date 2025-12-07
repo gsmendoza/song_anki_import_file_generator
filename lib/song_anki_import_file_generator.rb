@@ -7,6 +7,7 @@ require_relative "song_anki_import_file_generator/stanza"
 require_relative "song_anki_import_file_generator/line"
 require_relative "song_anki_import_file_generator/card"
 require_relative "song_anki_import_file_generator/output"
+require_relative "song_anki_import_file_generator/input_line"
 require_relative "song_anki_import_file_generator/input"
 
 module SongAnkiImportFileGenerator
