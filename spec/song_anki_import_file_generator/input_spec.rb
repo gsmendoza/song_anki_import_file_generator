@@ -3,11 +3,13 @@ require "spec_helper"
 RSpec.describe SongAnkiImportFileGenerator::Input do
   describe "#to_song" do
     it "returns a song from the content" do
-      content = File.read("spec/fixtures/Jack O’Connell, Brian Dunphy & Darren Holden - Rocky Road to Dublin.yml.txt")
+      content = File.read("spec/fixtures/Jack O’Connell, Brian Dunphy & Darren Holden - Rocky Road to Dublin.txt")
       input = SongAnkiImportFileGenerator::Input.new(content)
       song = input.to_song
 
       expect(song).to be_a(SongAnkiImportFileGenerator::Song)
+      expect(song.title).to eq("Rocky Road to Dublin")
+      expect(song.artist).to eq("Jack O’Connell, Brian Dunphy & Darren Holden")
 
       aggregate_failures do
         expect(song.stanzas.size).to eq(13)

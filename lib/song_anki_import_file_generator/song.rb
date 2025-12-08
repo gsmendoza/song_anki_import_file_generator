@@ -1,8 +1,11 @@
 module SongAnkiImportFileGenerator
   class Song
     attr_reader :stanzas
+    attr_accessor :artist, :title
 
-    def initialize
+    def initialize(artist: nil, title: nil)
+      @artist = artist
+      @title = title
       @stanzas = []
     end
 

@@ -64,6 +64,7 @@ RSpec.describe SongAnkiImportFileGenerator::App do
       context "when the input is a file has a single stanza with a single line" do
         let(:input_content) do
           <<~STANZA
+            Sinners - Rocky Road to Dublin
             [Intro]
             ...         Then off to reap the corn,
           STANZA
@@ -72,7 +73,7 @@ RSpec.describe SongAnkiImportFileGenerator::App do
         it "generates an Anki import file with a single card" do
           call_app
 
-          expect(File.read(output_path)).to eq(%(First Line,"1. [Intro]\n1. ...         Then off to reap the corn,"\n))
+          expect(File.read(output_path)).to eq(%("Sinners - Rocky Road to Dublin\nFirst Line","1. [Intro]\n1. ...         Then off to reap the corn,"\n))
         end
       end
     end

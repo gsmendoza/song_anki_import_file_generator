@@ -2,7 +2,7 @@ require "spec_helper"
 
 RSpec.describe SongAnkiImportFileGenerator::Line do
   describe "#to_card" do
-    let(:song) { SongAnkiImportFileGenerator::Song.new }
+    let(:song) { SongAnkiImportFileGenerator::Song.new(artist: "Sinners", title: "Rocky Road to Dublin") }
 
     context "when the stanza is the first stanza of the song" do
       let(:stanza) { SongAnkiImportFileGenerator::Stanza.new(title: "Intro") }
@@ -21,7 +21,7 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to 'First Line'" do
           card = line.to_card
 
-          expect(card.front).to eq("First Line")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin\nFirst Line")
           expect(card.back).to eq("1. Intro\n1. ...         Then off to reap the corn,")
         end
       end
@@ -45,7 +45,7 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to the line previous to line i" do
           card = line_i.to_card
 
-          expect(card.front).to eq("1. Intro\n1. ...         Then off to reap the corn,")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin\n1. Intro\n1. ...         Then off to reap the corn,")
           expect(card.back).to eq("1. Intro\n2. ...         and leave where I was born")
         end
       end
@@ -79,7 +79,7 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to the last line of the previous stanza" do
           card = line.to_card
 
-          expect(card.front).to eq("1. Intro\n1. ..          four, five")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin\n1. Intro\n1. ..          four, five")
           expect(card.back).to eq("2. Verse\n1. <Am>--      Well, in the merry month of May,")
         end
       end

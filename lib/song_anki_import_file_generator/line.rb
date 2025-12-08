@@ -12,7 +12,7 @@ module SongAnkiImportFileGenerator
     end
 
     def front
-      if first_in_stanza?
+      front_text = if first_in_stanza?
         if stanza.first?
           "First Line"
         else
@@ -20,6 +20,12 @@ module SongAnkiImportFileGenerator
         end
       else
         previous.to_s
+      end
+
+      if stanza.song.artist && stanza.song.title
+        "#{stanza.song.artist} - #{stanza.song.title}\n#{front_text}"
+      else
+        front_text
       end
     end
 
