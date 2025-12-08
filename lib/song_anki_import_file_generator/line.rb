@@ -16,7 +16,7 @@ module SongAnkiImportFileGenerator
     end
 
     def front_text
-      return "First Line" if stanza.first? && first_in_stanza?
+      return "0. First Line" if stanza.first? && first_in_stanza?
       return @stanza.previous.lines.last.to_s if first_in_stanza?
 
       previous.to_s

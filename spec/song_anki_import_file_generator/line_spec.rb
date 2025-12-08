@@ -18,10 +18,10 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
           stanza.add_line(line)
         end
 
-        it "sets the front of the card to 'First Line'" do
+        it "sets the front of the card to '0. First Line'" do
           card = line.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin\nFirst Line")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin\n0. First Line")
           expect(card.back).to eq("1. Intro\n1. ...         Then off to reap the corn,")
         end
       end
