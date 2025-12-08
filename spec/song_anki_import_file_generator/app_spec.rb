@@ -77,5 +77,15 @@ RSpec.describe SongAnkiImportFileGenerator::App do
         end
       end
     end
+
+    context "when provided a complete song" do
+      let(:input_content) { File.read("spec/fixtures/Jack O’Connell, Brian Dunphy & Darren Holden - Rocky Road to Dublin.txt") }
+
+      it "matches the expected output" do
+        call_app
+
+        expect(File.read(output_path)).to eq(File.read("spec/fixtures/Jack O’Connell, Brian Dunphy & Darren Holden - Rocky Road to Dublin.csv"))
+      end
+    end
   end
 end
