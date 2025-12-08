@@ -1,9 +1,8 @@
-/.bundle/
-/.yardoc
-/_yardoc/
-/coverage/
-/doc/
-/pkg/
-/spec/reports/
-/tmp/
+.bundle/
+.yardoc
+coverage/
+doc/
+pkg/
 song_anki_import_file_generator.code-workspace
+spec/reports/
+tmp/
