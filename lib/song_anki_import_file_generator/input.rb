@@ -5,19 +5,10 @@ module SongAnkiImportFileGenerator
     end
 
     def to_song
-      lines = @content.each_line.map { |line| InputLine.new(text: line.chomp) }
-      first_line = lines.shift
-
-      if first_line
-        artist, title = first_line.text.split(" - ")
-        song = Song.new(artist: artist, title: title)
-      else
-        song = Song.new
-      end
-
+      song = build_song
       current_stanza = nil
 
-      lines.each do |line|
+      body_lines.each do |line|
         if line.stanza_header?
           current_stanza = Stanza.new(title: line.text)
           song.add_stanza(current_stanza)
@@ -27,6 +18,27 @@ module SongAnkiImportFileGenerator
       end
 
       song
+    end
+
+    private
+
+    def build_song
+      first_line = lines[0]
+
+      if first_line
+        artist, title = first_line.text.split(" - ")
+        Song.new(artist: artist, title: title)
+      else
+        Song.new
+      end
+    end
+
+    def body_lines
+      lines[1..] || []
+    end
+
+    def lines
+      @lines ||= @content.each_line.map { |line| InputLine.new(text: line.chomp) }
     end
   end
 end
