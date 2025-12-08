@@ -80,7 +80,7 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
           card = line.to_card
 
           expect(card.front).to eq("Sinners - Rocky Road to Dublin\n1. Intro\n1. ..          four, five")
-          expect(card.back).to eq("2. Verse\n1. <Am>--      Well, in the merry month of May,")
+          expect(card.back).to eq("2. Verse\n1. &lt;Am&gt;--      Well, in the merry month of May,")
         end
       end
     end

@@ -39,7 +39,7 @@ module SongAnkiImportFileGenerator
     end
 
     def to_s
-      "#{@stanza.index + 1}. #{@stanza.title}\n#{index + 1}. #{@text}"
+      "#{@stanza.index + 1}. #{@stanza.title}\n#{index + 1}. #{CGI.escapeHTML(@text)}"
     end
   end
 end
