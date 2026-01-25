@@ -1,3 +1,5 @@
+require "cgi"
+
 module SongAnkiImportFileGenerator
   class Line
     attr_accessor :stanza
