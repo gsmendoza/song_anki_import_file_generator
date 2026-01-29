@@ -14,7 +14,7 @@ module SongAnkiImportFileGenerator
     end
 
     def front
-      "#{stanza.song.artist} - #{stanza.song.title}\n#{front_text}"
+      "#{stanza.song.artist} - #{stanza.song.title}<br/>\n#{front_text}"
     end
 
     def front_text
@@ -41,7 +41,7 @@ module SongAnkiImportFileGenerator
     end
 
     def to_s
-      "#{@stanza.index + 1}. #{@stanza.title}\n#{index + 1}. #{CGI.escapeHTML(@text)}"
+      "#{@stanza.index + 1}. #{@stanza.title}<br/>\n#{index + 1}. #{CGI.escapeHTML(@text)}"
     end
   end
 end

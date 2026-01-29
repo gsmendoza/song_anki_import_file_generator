@@ -21,8 +21,8 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to '0. First Line'" do
           card = line.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin\n0. First Line")
-          expect(card.back).to eq("1. Intro\n1. ...         Then off to reap the corn,")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n0. First Line")
+          expect(card.back).to eq("1. Intro<br/>\n1. ...         Then off to reap the corn,")
         end
       end
 
@@ -45,8 +45,8 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to the line previous to line i" do
           card = line_i.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin\n1. Intro\n1. ...         Then off to reap the corn,")
-          expect(card.back).to eq("1. Intro\n2. ...         and leave where I was born")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n1. Intro<br/>\n1. ...         Then off to reap the corn,")
+          expect(card.back).to eq("1. Intro<br/>\n2. ...         and leave where I was born")
         end
       end
     end
@@ -79,8 +79,8 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
         it "sets the front of the card to the last line of the previous stanza" do
           card = line.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin\n1. Intro\n1. ..          four, five")
-          expect(card.back).to eq("2. Verse\n1. &lt;Am&gt;--      Well, in the merry month of May,")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n1. Intro<br/>\n1. ..          four, five")
+          expect(card.back).to eq("2. Verse<br/>\n1. &lt;Am&gt;--      Well, in the merry month of May,")
         end
       end
     end
@@ -96,7 +96,7 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
       song = SongAnkiImportFileGenerator::Song.new
       song.add_stanza(stanza)
 
-      expect(line.to_s).to eq("1. Intro\n1. ...         Then off to reap the corn,")
+      expect(line.to_s).to eq("1. Intro<br/>\n1. ...         Then off to reap the corn,")
     end
   end
 end

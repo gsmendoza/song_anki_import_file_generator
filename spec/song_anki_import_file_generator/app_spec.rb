@@ -73,7 +73,7 @@ RSpec.describe SongAnkiImportFileGenerator::App do
         it "generates an Anki import file with a single card" do
           call_app
 
-          expect(File.read(output_path)).to eq(%("Sinners - Rocky Road to Dublin\n0. First Line","1. [Intro]\n1. ...         Then off to reap the corn,"\n))
+          expect(File.read(output_path)).to eq(%("Sinners - Rocky Road to Dublin<br/>\n0. First Line","1. [Intro]<br/>\n1. ...         Then off to reap the corn,"\n))
         end
       end
     end
