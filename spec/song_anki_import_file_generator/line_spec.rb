@@ -18,11 +18,11 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
           stanza.add_line(line)
         end
 
-        it "sets the front of the card to '0. First Line'" do
+        it "sets the front of the card to the full clozed content and back to empty" do
           card = line.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n0. First Line")
-          expect(card.back).to eq("1. Intro<br/>\n1. ...         Then off to reap the corn,")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n<br/>\n0. First Line<br/>\n<br/>\n1. Intro<br/>\n1. {{c1::...         Then off to reap the corn,}}")
+          expect(card.back).to eq("")
         end
       end
 
@@ -42,11 +42,11 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
           end
         end
 
-        it "sets the front of the card to the line previous to line i" do
+        it "sets the front of the card to include previous line context and clozed current line" do
           card = line_i.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n1. Intro<br/>\n1. ...         Then off to reap the corn,")
-          expect(card.back).to eq("1. Intro<br/>\n2. ...         and leave where I was born")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n<br/>\n1. Intro<br/>\n1. ...         Then off to reap the corn,<br/>\n<br/>\n1. Intro<br/>\n2. {{c1::...         and leave where I was born}}")
+          expect(card.back).to eq("")
         end
       end
     end
@@ -76,27 +76,13 @@ RSpec.describe SongAnkiImportFileGenerator::Line do
           stanza_i.add_line(line)
         end
 
-        it "sets the front of the card to the last line of the previous stanza" do
+        it "sets the front of the card to include last line of previous stanza and clozed current line" do
           card = line.to_card
 
-          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n1. Intro<br/>\n1. ..          four, five")
-          expect(card.back).to eq("2. Verse<br/>\n1. &lt;Am&gt;--      Well, in the merry month of May,")
+          expect(card.front).to eq("Sinners - Rocky Road to Dublin<br/>\n<br/>\n1. Intro<br/>\n1. ..          four, five<br/>\n<br/>\n2. Verse<br/>\n1. {{c1::&lt;Am&gt;--      Well, in the merry month of May,}}")
+          expect(card.back).to eq("")
         end
       end
-    end
-  end
-
-  describe "#to_s" do
-    it "returns the text of the line" do
-      line = described_class.new(text: "...         Then off to reap the corn,")
-
-      stanza = SongAnkiImportFileGenerator::Stanza.new(title: "Intro")
-      stanza.add_line(line)
-
-      song = SongAnkiImportFileGenerator::Song.new
-      song.add_stanza(stanza)
-
-      expect(line.to_s).to eq("1. Intro<br/>\n1. ...         Then off to reap the corn,")
     end
   end
 end

@@ -2,6 +2,8 @@ require "cgi"
 
 module SongAnkiImportFileGenerator
   class Line
+    LINE_DELIMITER = "<br/>\n".freeze
+
     attr_accessor :stanza
     attr_reader :text
 
@@ -14,18 +16,26 @@ module SongAnkiImportFileGenerator
     end
 
     def front
-      "#{stanza.song.artist} - #{stanza.song.title}<br/>\n#{front_text}"
+      front_texts = [
+        "#{stanza.song.artist} - #{stanza.song.title}",
+        "",
+        previous_texts,
+        "",
+        cloze_texts
+      ].flatten
+
+      front_texts.join(LINE_DELIMITER)
     end
 
-    def front_text
-      return "0. First Line" if stanza.first? && first_in_stanza?
-      return @stanza.previous.lines.last.to_s if first_in_stanza?
+    def previous_texts
+      return ["0. First Line"] if stanza.first? && first_in_stanza?
+      return @stanza.previous.lines.last.texts if first_in_stanza?
 
-      previous.to_s
+      previous.texts
     end
 
     def back
-      to_s
+      ""
     end
 
     def first_in_stanza?
@@ -40,8 +50,18 @@ module SongAnkiImportFileGenerator
       @previous ||= @stanza.lines[index - 1]
     end
 
-    def to_s
-      "#{@stanza.index + 1}. #{@stanza.title}<br/>\n#{index + 1}. #{CGI.escapeHTML(@text)}"
+    def texts
+      [
+        "#{@stanza.index + 1}. #{@stanza.title}",
+        "#{index + 1}. #{CGI.escapeHTML(@text)}"
+      ]
+    end
+
+    def cloze_texts
+      [
+        "#{@stanza.index + 1}. #{@stanza.title}",
+        "#{index + 1}. {{c1::#{CGI.escapeHTML(@text)}}}"
+      ]
     end
   end
 end
